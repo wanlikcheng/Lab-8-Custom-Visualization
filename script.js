@@ -64,7 +64,7 @@ d3.csv("driving.csv", d3.autoType)
 
         xAxisGroup.selectAll(".tick line")
             .clone()
-            .attr("y2", height)
+            .attr("y2", 0 - height)
             .attr("stroke-opacity", 0.1) // make it transparent
 
         let yAxisGroup = svg.append("g")
@@ -94,14 +94,16 @@ d3.csv("driving.csv", d3.autoType)
             .attr("alignment-baseline", "baseline")
             .text("Cost per gallon ($)")
 
+        // line and path
         const line = d3
             .line()
-            .x(function(d) { return xScale(d.miles); })
-            .y(function(d) { return yScale(d.gas); });
+            .x(d => xScale(d.miles))
+            .y(d => yScale(d.gas));
 
-        svg.append("path")
+        const path = svg.append("path")
             .datum(data)
-            .attr("class", "line")
+            .attr("fill", "none")
+            .attr("stroke", "black")
             .attr("d", line);
     })
 
